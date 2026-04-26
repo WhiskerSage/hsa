@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Human Study Audio</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --panel: #fffaf2;
+      --ink: #1f1a17;
+      --muted: #6e6258;
+      --accent: #8b2e1e;
+      --line: #d7cabd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #efe2d1 0, transparent 35%),
+        radial-gradient(circle at top right, #e8d6c3 0, transparent 28%),
+        linear-gradient(180deg, #f8f2ea 0%, var(--bg) 100%);
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    p.lead {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 720px;
+    }
+
+    .note {
+      margin-bottom: 24px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, 0.82);
+      border-radius: 14px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: 0 8px 30px rgba(67, 39, 22, 0.05);
+    }
+
+    .row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .audio-id {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .meta {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .text {
+      margin: 0 0 12px;
+      line-height: 1.5;
+      font-size: 0.97rem;
+    }
+
+    audio {
+      width: 100%;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Human Study Audio</h1>
+    <p class="lead">Static audio hosting for the human-study materials. Use the direct WAV links in the questionnaire; this page is only for quick manual checks.</p>
+    <div class="note">
+      The files are published under <code>./audio/A01.wav</code> to <code>./audio/A15.wav</code>.
+      The questionnaire should reference those direct audio URLs rather than this page.
+    </div>
+    <section class="grid" id="audio-grid"></section>
+    <footer>
+      Mapping metadata lives in <code>audio_mapping.csv</code>.
+    </footer>
+  </main>
+  <script>
+    const entries = [
+      "A01","A02","A03","A04","A05",
+      "A06","A07","A08","A09","A10",
+      "A11","A12","A13","A14","A15"
+    ];
+
+    const grid = document.getElementById("audio-grid");
+    for (const audioId of entries) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="row">
+          <div class="audio-id">${audioId}</div>
+          <div class="meta"><code>audio/${audioId}.wav</code></div>
+        </div>
+        <p class="text">Quick playback check for ${audioId}.</p>
+        <audio controls preload="none" src="./audio/${audioId}.wav"></audio>
+      `;
+      grid.appendChild(card);
+    }
+  </script>
+</body>
+</html>
